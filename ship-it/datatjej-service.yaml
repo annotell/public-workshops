@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: datatjej
   labels:
-    app: flask
+    app: datatjej
 spec:
   selector:
-    app: flask
+    app: datatjej
   ports:
     - protocol: TCP
       port: 80

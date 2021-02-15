@@ -3,20 +3,20 @@ kind: Deployment
 metadata:
   name: datatjej
   labels:
-    app: flask
+    app: datatjej
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask
+      app: datatjej
   template:
     metadata:
       labels:
-        app: flask
+        app: datatjej
     spec:
       containers:
       - name: datatjej
-        image: datatjej:2.2
+        image: datatjej:2.0
         imagePullPolicy: Never
         ports:
         - containerPort: 80

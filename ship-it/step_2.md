@@ -14,22 +14,44 @@ minikube start
 🌟  Enabled addons: storage-provisioner, default-storageclass
 🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 
-make sure the .yaml points to the right image, make sure the image exists in the docker daemon (docker images | grep datatjej) check the tag
 
-kubectl apply -f datatjej-deployment.yaml --dry-run=client
 
-kubectl apply -f datatjej-deployment.yaml
+Minikube docker has it's own context, we need to rebuild our docker image (or pull for a remote repository(which we don't have now)) in the minikube context! So let's start with that:
+
+Set up the minikube docker context:
+eval $(minikube docker-env)
+
+rebuild the docker image, but let's pick a new tag:
+docker build -t datatjej:2.0 .
+
+make sure the image exists in the docker daemon (docker images | grep datatjej) check the tag
+
+
+make sure the .yaml points to the right image, 
+
+```yaml
+      containers:
+      - name: datatjej
+        image: datatjej:2.0
+```
+
+
+$ kubectl apply -f datatjej-deployment.yaml --dry-run=client
+deployment.apps/datatjej created (dry run)
+
+$ kubectl apply -f datatjej-deployment.yaml
 deployment.apps/datatjej created
 
-kubectl get deployments.apps
+kubectl get deployments
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE
-datatjej   0/1     1            0           26s
+datatjej   2/2     2            2           27s
 
+
+each pod maps one "docker run" on your laptop
 kubectl get pods 
 NAME                        READY   STATUS    RESTARTS   AGE
-datatjej-7d74b7c88c-k2sx5   1/1     Running   0          5s
-
-kubectl logs data-<tab> to check that the applicaitons logs looks right
+datatjej-5564cc49c5-h5n6d   1/1     Running   0          60s
+datatjej-5564cc49c5-t5zg4   1/1     Running   0          60s
 
 the next step is to expose our application with a service
 
@@ -41,6 +63,7 @@ service/datatjej created
 
 kubectl get service datatjej
 
+*** We can see that the service has two endpoints, mapping to our two pods
 kubectl get endpoints datatjej
 NAME       ENDPOINTS                         AGE
 datatjej   172.17.0.3:8080,172.17.0.4:8080   4h28m
@@ -50,13 +73,11 @@ NAME                        READY   STATUS    RESTARTS   AGE   IP           NODE
 datatjej-7d74b7c88c-k2sx5   1/1     Running   0          65m   172.17.0.3   minikube   <none>           <none>
 datatjej-7d74b7c88c-vglrc   1/1     Running   0          39s   172.17.0.4   minikube   <none>           <none>
 
+**** compare output of pods with list of endpoints, they should match
 
-We now have a service, and it's backed by two different pods! This allows us to have a higher available application since we can lose one of the pods and still servce traffic. But by just setting up a service, we're not exposing our application outside the minikube kubernetes cluster, so in order to access the website, we need to set up a link to the service via minikube:
-minikube service --url datatjej
+We now have a service, and it's backed by two different pods! This allows us to have a higher available application since we can lose one of the pods and still servce traffic. But by just setting up a service like this, we're not exposing our application outside the minikube kubernetes cluster context, so in order to access the website, we need to set up a link to the service via minikube, once that is done, we can now view our website via the URL minikube returns, open the link in the browser
 
-once that is done, we can now view our website via the URL minikube returns, open the link in the browser
-
-minikube service --url datatjej
+$ minikube service --url datatjej
 😿  service default/datatjej has no node port
 🏃  Starting tunnel for service datatjej.
 |-----------|----------|-------------|------------------------|
@@ -67,5 +88,5 @@ minikube service --url datatjej
 http://127.0.0.1:63093
 ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 
-
+ctrl+c to exit the tunnel
 
