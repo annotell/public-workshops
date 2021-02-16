@@ -1,10 +1,15 @@
+# Set up your environment
+1. Download or `git clone` the repository https://github.com/annotell/public-workshops
+Open a terminal and cd to the repository location and into the ship-it folder. From here we will run all our commands
+    ```
+    $ cd ship-it
+    ```
 
-Check out the code in the browser; open the src/index.html in your browser and take a look around
+1. Check out the code in the browser; open the file://<full-path-to-repo>/public-workshops/ship-it/src/index.html in your browser and take a look around
 
 Put code in a container
 
 We picked a simple responsive webpage from a template at https://html5up.net/
-
 
 from here we will run all our commands
 cd ship-it
