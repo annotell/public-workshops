@@ -78,59 +78,67 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
   NAME                        READY   STATUS    RESTARTS   AGE
   datatjej-5564cc49c5-h5n6d   1/1     Running   0          60s
   datatjej-5564cc49c5-t5zg4   1/1     Running   0          60s
-```
+  ```
+
 9. The next step is to expose our application with a service
-```bash
-$ kubectl apply -f datatjej-service.yaml --dry-run=client
-```
-Expected output:
-```bash
-service/datatjej configured (dry run)
-```
-```bash
-$ kubectl apply -f datatjej-service.yaml
-```
-```bash
-service/datatjej created
-```
-```bash
-$ kubectl get service datatjej
-```
+  ```bash
+  $ kubectl apply -f datatjej-service.yaml --dry-run=client
+  ```
+  Expected output:
+  ```bash
+  service/datatjej configured (dry run)
+  ```
+  Is the output as expected, you can apply without the dry-run
+  ```bash
+  $ kubectl apply -f datatjej-service.yaml
+  ```
+  Expected output:
+  ```bash
+  service/datatjej created
+  ```
+10. List the service ´datatjej´
+  ```bash
+  $ kubectl get service datatjej
+  ```
+11. Now list the endpoints conected to the service
+  ```bash
+  $ kubectl get endpoints datatjej
+  ```
+  You get the output shown below where it is shown that the service has two endpoints, mapping to our two pods
+  ```bash
+  NAME       ENDPOINTS                         AGE
+  datatjej   172.17.0.3:8080,172.17.0.4:8080   4h28m
+  ```
+12. Once again we want to use the command to get the pods, but this time we   want more information in our output. This is why we added `-o wide` to the command. We then also get `IP, NODE, NOMINATED NODE and READINESS GATES for the two pods.
+  ```bash
+  $ kubectl get pods -o wide
+  ```
+  Expected output:
+  ```bash
+  NAME                        READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+  datatjej-7d74b7c88c-k2sx5   1/1     Running   0          65m   172.17.0.3   minikube   <none>           <none>
+  datatjej-7d74b7c88c-vglrc   1/1     Running   0          39s   172.17.0.4   minikube   <none>           <none>
+  ```
+  Compare the output of pods with the list of endpoints, they should match.
 
-*** We can see that the service has two endpoints, mapping to our two pods
-```bash
-$ kubectl get endpoints datatjej
-```
-```bash
-NAME       ENDPOINTS                         AGE
-datatjej   172.17.0.3:8080,172.17.0.4:8080   4h28m
-```
-```bash
-kubectl get pods -o wide
-```
-```bash
-NAME                        READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
-datatjej-7d74b7c88c-k2sx5   1/1     Running   0          65m   172.17.0.3   minikube   <none>           <none>
-datatjej-7d74b7c88c-vglrc   1/1     Running   0          39s   172.17.0.4   minikube   <none>           <none>
-```
-**** compare output of pods with list of endpoints, they should match
+13. We now have a service, and it's supported with two different pods! This allows us to have a higher available application since we can lose one of the pods and still servce traffic. But by just setting up a service like this, we're not exposing our application outside the minikube kubernetes cluster context, so in order to access the website, we need to set up a link to the service via minikube, once that is done, we can now view our website via the URL minikube returns, open the link in the browser
+  ```bash
+  $ minikube service --url datatjej
+  ```
+  Expected output:
+  ```bash
+  😿  service default/datatjej has no node port
+  🏃  Starting tunnel for service datatjej.
+  |-----------|----------|-------------|------------------------|
+  | NAMESPACE |   NAME   | TARGET PORT |          URL           |
+  |-----------|----------|-------------|------------------------|
+  | default   | datatjej |             | http://127.0.0.1:63093 |
+  |-----------|----------|-------------|------------------------|
+  http://127.0.0.1:63093
+  ❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
 
-We now have a service, and it's backed by two different pods! This allows us to have a higher available application since we can lose one of the pods and still servce traffic. But by just setting up a service like this, we're not exposing our application outside the minikube kubernetes cluster context, so in order to access the website, we need to set up a link to the service via minikube, once that is done, we can now view our website via the URL minikube returns, open the link in the browser
-```bash
-$ minikube service --url datatjej
-```
-```bash
-😿  service default/datatjej has no node port
-🏃  Starting tunnel for service datatjej.
-|-----------|----------|-------------|------------------------|
-| NAMESPACE |   NAME   | TARGET PORT |          URL           |
-|-----------|----------|-------------|------------------------|
-| default   | datatjej |             | http://127.0.0.1:63093 |
-|-----------|----------|-------------|------------------------|
-http://127.0.0.1:63093
-❗  Because you are using a Docker driver on darwin, the terminal needs to be open to run it.
-
-ctrl+c to exit the tunnel
-```
+  ctrl+c to exit the tunnel
+  ```
+Congratulation! You have now your own website running via an URL in minikube!✨
 
 Return to the [workshop guidelines](./README.md)
