@@ -1,3 +1,4 @@
+# Deploying the Code
 Next step will be to instead of running the docker container on you local computer, see how it would look when running it in kubernetes. 
 Usually Kubernetes is run in the cloud and over multiple instances, but for the sake of this workshop we'll use minikube which similates a Kubernetes cluster on your local computer. 
 
@@ -90,3 +91,4 @@ http://127.0.0.1:63093
 
 ctrl+c to exit the tunnel
 
+Return to the [workshop guidelines](./README.md)

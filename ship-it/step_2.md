@@ -1,17 +1,20 @@
 # Packaging the Code
 
-We picked a simple responsive webpage from a template at https://html5up.net/
+We know our code! And it works in the browser. But what if we want to package this so that we can run the code *anywhere*. 
 
-from here we will run all our commands
-cd ship-it
-
-docker build -t datatjej:1.0 .
-
-docker images
-
-docker run -d -p 80:80 datatjej:1.0
-
-visit localhost:80 in your browser
+1. The first step is to create a docker image containing our code, based on the [Dockerfile](./Dockerfile).
+    ```bash
+    $ docker build -t datatjej:1.0 .
+    ```
+1. We should now be able to see that this docker image is created by listing docker images
+    ```bash
+    $ docker images
+    ```
+1. And now, let's spin up this container locally! This command tells docker to run a container from the image called `datatjej` with the tag `1.0`, connecting container port 80 to your local port 80, and `-d` means run it in the background.
+    ```bash
+    $ docker run -d -p 80:80 datatjej:1.0
+    ```
+1. We should now have a container running, serving our application on localhost:80 in your browser, try it out by pasting `localhost:80` into your browser address field.
 
 Make some changes to the code (for example, pick a new picture maybe from https://unsplash.com/)
 
@@ -39,3 +42,5 @@ stupefied_tesla
 
 
 Congratualations! You have successfully packaged your code in a container! :clap:
+
+Return to the [workshop guidelines](./README.md)

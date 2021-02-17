@@ -15,3 +15,6 @@ Check out the next part of the workshop at [step_2.md](./step_2.md) and follow t
 
 ### Step 3 - Deploying the Code
 The final step will be to take the code you've packaged in a container and deploying that container. Follow the guidelines in [step_3.md](./step_3.md).
+
+### Final step - The Clean Up!
+It's always good to clean up after a workshop, so check out [the steps](./step_10.md) to clean up running containers and minikube
