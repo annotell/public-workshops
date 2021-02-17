@@ -16,31 +16,42 @@ We know our code! And it works in the browser. But what if we want to package th
     ```
 1. We should now have a container running, serving our application on localhost:80 in your browser, try it out by pasting `localhost:80` into your browser address field.
 
-Make some changes to the code (for example, pick a new picture maybe from https://unsplash.com/)
+1. Make some changes to the code (for example, pick a new picture maybe from https://unsplash.com/)
 
-Once you've updated the code you need to build a new docker image that contains the updated code
+1. Once you've updated the code you need to build a new docker image that contains the updated code.
 
-Note the new version tag in the two following commandos
+     Note the new version tag in the two following commandos
+    ```bash
+    $ docker build -t datatjej:1.1 .
+    ```
+    ```bash
+    $ docker run -d -p 81:80 datatjej:1.1
+    ```
+1. Go back to localhost:80 and change it to localhost:81, which is connecting container port 80 to your local port 81, see that your changes has been applied
 
-docker build -t datatjej:1.1 .
 
-docker run -d -p 81:80 datatjej:1.1
-
-go back to localhost:81 and refresh the page, see that your changes has been applied
-
-
-clean up by stopping your container in docker
-docker ps
-docker stop {image_id or image_name}
-docker rm {image_id or image_name}
-➜  ship-it git:(main) ✗ docker ps
-CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                NAMES
-ad497457d42e   datatjej:1.0   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:80->80/tcp   stupefied_tesla
-➜  ship-it git:(main) ✗ docker stop stupefied_tesla && docker rm stupefied_tesla
-stupefied_tesla
-stupefied_tesla
-
+1. clean up by stopping your container in docker
+    ```bash
+    $ docker ps
+    ```
+    ```bash
+    $ docker stop {image_id or image_name}
+    ```
+    ```bash
+    $ docker rm {image_id or image_name}
+    ```
+    The output will be sililar to:
+    ```bash 
+    ➜  ship-it git:(main) ✗ docker ps
+    CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                NAMES
+    ad497457d42e   datatjej:1.0   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:80->80/tcp   stupefied_tesla
+   
+    ➜  ship-it git:(main) ✗ docker stop stupefied_tesla && docker rm stupefied_tesla
+    stupefied_tesla
+    stupefied_tesla
+    ```
 
 Congratualations! You have successfully packaged your code in a container! :clap:
 
 Return to the [workshop guidelines](./README.md)
+
