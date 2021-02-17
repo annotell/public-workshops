@@ -1,5 +1,5 @@
 # The Setup
-Prerequisite to install the following tools in order to be able to attend the workshop:
+Prerequisite to install the following tools in order to be able to attend the workshop, each tools has guidelines for different operating systems, so make sure to pick the one that matches your operating system:
 - docker https://www.docker.com/get-started
 - minikube https://minikube.sigs.k8s.io/docs/start/
     - Follow step 1 and step 2 here to make sure it's correctly set up
