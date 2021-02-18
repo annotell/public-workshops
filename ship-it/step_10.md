@@ -8,6 +8,8 @@ $ minikube stop
 In order to stop the containers we ran locally with `docker run`, do the following:
 ```bash
 $ docker stop $(docker ps -a -q)
+```
+```bash
 $ docker rm $(docker ps -a -q)
 ```
 

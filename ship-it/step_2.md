@@ -30,26 +30,6 @@ We know our code! And it works in the browser. But what if we want to package th
 1. Go back to localhost:80 and change it to localhost:81, which is connecting container port 80 to your local port 81, see that your changes has been applied
 
 
-1. clean up by stopping your container in docker
-    ```bash
-    $ docker ps
-    ```
-    ```bash
-    $ docker stop {image_id or image_name}
-    ```
-    ```bash
-    $ docker rm {image_id or image_name}
-    ```
-    The output will be sililar to:
-    ```bash 
-    ➜  ship-it git:(main) ✗ docker ps
-    CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS         PORTS                NAMES
-    ad497457d42e   datatjej:1.0   "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   0.0.0.0:80->80/tcp   stupefied_tesla
-   
-    ➜  ship-it git:(main) ✗ docker stop stupefied_tesla && docker rm stupefied_tesla
-    stupefied_tesla
-    stupefied_tesla
-    ```
 
 Congratualations! You have successfully packaged your code in a container! :clap:
 
