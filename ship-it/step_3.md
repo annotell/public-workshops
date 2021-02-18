@@ -107,7 +107,7 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
   You get the output shown below where it is shown that the service has two endpoints, mapping to our two pods
   ```bash
   NAME       ENDPOINTS                         AGE
-  datatjej   172.17.0.3:8080,172.17.0.4:8080   4h28m
+  datatjej   172.17.0.3:80,172.17.0.4:80   4h28m
   ```
 12. Once again we want to use the command to get the pods, but this time we   want more information in our output. This is why we added `-o wide` to the command. We then also get `IP, NODE, NOMINATED NODE and READINESS GATES for the two pods.
   ```bash
