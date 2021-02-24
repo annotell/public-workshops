@@ -2,7 +2,16 @@
 
 We know our code! And it works in the browser. But what if we want to package this so that we can run the code *anywhere*. 
 
-1. The first step is to create a docker image containing our code, based on the [Dockerfile](./Dockerfile).
+1. Make sure you're in the right folder in your terminal by running:
+    ```bash
+    $ pwd
+    ```
+    Example output:
+    ```bash
+    /Users/hannastrang/code/public-workshops/ship-it
+    ```
+
+1. Let's begin with creating a docker image containing our code, based on the [Dockerfile](./Dockerfile).
     ```bash
     $ docker build -t datatjej:1.0 .
     ```

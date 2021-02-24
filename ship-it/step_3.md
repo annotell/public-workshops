@@ -1,6 +1,6 @@
 # Deploying the Code
 Next step will be to instead of running the docker container on you local computer, see how it would look when running it in Kubernetes. 
-Usually Kubernetes is run in the cloud and over multiple instances, but for the sake of this workshop we'll use minikube which similates a Kubernetes cluster on your local computer. 
+Usually Kubernetes is run in the cloud and over multiple instances, but for the sake of this workshop we'll use minikube which simulates a Kubernetes cluster on your local computer. 
 
 1. First step is to start minikube
   ```bash
@@ -19,12 +19,13 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
   🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
   ```
 
-  Minikube docker has it's own context, we need to rebuild our docker image (or pull for a remote repository(which we don't have now)) in the minikube context! So let's start with that:
+  Minikube docker has it's own context, we need to rebuild our docker image (or pull for a remote repository (which we don't have now)) in the minikube context! So let's start with that:
 
 2. Set up the minikube docker context:
   ```bash
   $ eval $(minikube docker-env)
   ```
+  There will be no visual cues that anything changed, but we will now be using minikube docker context.
 
 3. Our next step is to rebuild the docker image, but let's pick a new tag:
   ```bash
@@ -42,7 +43,7 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
         image: datatjej:2.0
 ```
 
-6. You have now made sure the image in the .yaml is correct, then it is time to   apply this to Kubernetes, but first we want to check if everything is ok
+6. You have now made sure the image in the .yaml is correct, then it's time to   apply this to Kubernetes, but first we want to check if everything is ok
   ```bash
   $ kubectl apply -f datatjej-deployment.yaml --dry-run=client
   ```
@@ -100,6 +101,11 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
   ```bash
   $ kubectl get service datatjej
   ```
+  Expected output:
+  ```bash
+  NAME       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+datatjej   ClusterIP   10.108.62.211   <none>        80/TCP    22s
+```
 11. Now list the endpoints conected to the service
   ```bash
   $ kubectl get endpoints datatjej
@@ -121,7 +127,7 @@ Usually Kubernetes is run in the cloud and over multiple instances, but for the 
   ```
   Compare the output of pods with the list of endpoints, they should match.
 
-13. We now have a service, and it's supported with two different pods! This allows us to have a higher available application since we can lose one of the pods and still servce traffic. But by just setting up a service like this, we're not exposing our application outside the minikube kubernetes cluster context, so in order to access the website, we need to set up a link to the service via minikube, once that is done, we can now view our website via the URL minikube returns, open the link in the browser
+13. We now have a service, and it's supported with two different pods! This allows us to have a higher available application since we can lose one of the pods and still serve traffic. But by just setting up a service like this, we're not exposing our application outside the minikube kubernetes cluster context, so in order to access the website, we need to set up a link to the service via minikube, once that is done, we can now view our website via the URL minikube returns, open the link in the browser
   ```bash
   $ minikube service --url datatjej
   ```
