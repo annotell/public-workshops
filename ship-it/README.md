@@ -1,6 +1,7 @@
 # Ship it! 
 *a workshop on how to package and deploy code by Annotell*
 
+You can find the slides used in the introduction presentation in [presentation.pdf](./presentation.pdf)
 ---
 
 ### Before the workshop
